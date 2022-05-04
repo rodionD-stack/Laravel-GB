@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController as AdminController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,38 +17,34 @@ use App\Http\Controllers\Admin\IndexController as AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-/*Route::get('/test', function () {
-    return "hello, world!";
-});
-
-Route::get('/page1', function () {
-    return "lorem ipsum";
-});*/
-
-/*Route::view('/', 'index');
-Route::view('/about', 'about');
-Route::view('/sport', 'sport');*/
-
 
 Route::get('/', [IndexController::class, 'index'])->name('home');
-Route::view('/about', 'about')->name('about');
+
 
 Route::name('news.')
     ->prefix('news')
-    ->group(function(){
+    ->group(function () {
         Route::get('/', [NewsController::class, 'index'])->name('index');
-        Route::get('/{id}', [NewsController::class, 'show'])->name('one');
+        Route::get('/one/{id}', [NewsController::class, 'show'])->name('one');
+        Route::name('category.')
+            ->group(function () {
+                Route::get('/categories', [CategoryController::class, 'index'])->name('index');
+                Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('show');
+            });
+
     });
+
 
 Route::name('admin.')
     ->prefix('admin')
-    ->group(function(){
+    ->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
-        Route::get('/test', [AdminController::class, 'test'])->name('test');
-        Route::get('/test_1', [AdminController::class, 'test_1'])->name('test_1');
+        Route::get('/test1', [AdminController::class, 'test1'])->name('test1');
+        Route::get('/test2', [AdminController::class, 'test2'])->name('test2');
+        Route::match(['get', 'post'],'/create', [AdminController::class, 'create'])->name('create');
+
     });
+Route::view('/about', 'about')->name('about');
+
+Auth::routes();
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
