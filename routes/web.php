@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\IndexController as AdminController;
 |
 */
 
-
+Auth::routes();
 Route::get('/', [IndexController::class, 'index'])->name('home');
 
 
@@ -46,5 +46,5 @@ Route::name('admin.')
     });
 Route::view('/about', 'about')->name('about');
 
-Auth::routes();
+
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

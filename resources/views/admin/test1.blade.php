@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <p>Тест 1</p>
+                        <p class="text-center">Тест 1</p>
                     </div>
                 </div>
             </div>

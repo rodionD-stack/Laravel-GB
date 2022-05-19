@@ -2,7 +2,7 @@
 
 namespace App\Models;
 use App\Models\Categories;
-use JetBrains\PhpStorm\Pure;
+use Illuminate\Support\Facades\File;
 
 class News
 {
@@ -45,18 +45,23 @@ class News
     }
 
 
-    public function getNews(): array
+//    public function getNews(): array
+//    {
+//        return $this->news;
+//    }
+    public function getNews() //вывод новостей из файла
     {
-        return $this->news;
+        $news = File::get(storage_path() . '/news.json');
+        return json_decode($news, true);
     }
 
-    public function getNewsByCategorySlug($slug)
+    public function getNewsByCategorySlug($slug): array
     {
         $id = $this->category->getCategoryIdBySlug($slug);
         return $this->getNewsByCategoryId($id);
     }
 
-    public function getNewsByCategoryId($id)
+    public function getNewsByCategoryId($id): array
     {
         $news = [];
         foreach ($this->getNews() as $item) {
@@ -71,7 +76,7 @@ class News
     {
         return $this->getNews()[$id] ?? [];
     }
-//    #[Pure] public function getNewsById($id): array
+//    public function getNewsById($id): array
 //    {
 //        return $this->getNews()[$id] ?? [];
 //        foreach (static::getNews() as $news){

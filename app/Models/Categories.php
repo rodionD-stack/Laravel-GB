@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use JetBrains\PhpStorm\Pure;
 
 class Categories
 {
@@ -19,7 +18,7 @@ class Categories
         ]
     ];
 
-    public function getCategories()
+    public function getCategories(): array
     {
         return $this->categories;
     }
@@ -43,7 +42,7 @@ class Categories
         return $id;
     }
 
-    public function getCategoryById($id)
+    public function getCategoryById($id): array
     {
         return $this->getCategories()[$id] ?? [];
     }
