@@ -7,6 +7,7 @@ use App\Models\Categories;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class IndexController extends Controller
 {
@@ -19,14 +20,21 @@ class IndexController extends Controller
         if ($request->isMethod('post')) {
             $request->flash();
             $arr = $request->except('_token');
-            //пришлось добавить рандомное id, в массив, так как с формы не идет id и получал ошибку на выводе Undefined index: id (View: /var/www/laravel/resources/views/news/index.blade.php)
-            $arrId = ['id' => rand(5, 100)] + $arr;
-            $news_arr = $news->getNews(); //прочитал файл новостей в массив
-            $result  =  array_merge($news_arr, [$arrId]); //добавил в конец массива новостей
-            File::put(storage_path() . '/news.json', json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)); //сохранил новость в файл в json
 
-            dd($result);
-            return redirect()->route('admin.create');
+            $url = null;
+            if ($request->file('image')) {
+                $path = Storage::putFile('public/img', $request->file('image'));
+                $url = Storage::url($path);
+            }
+
+            $data = $news->getNews();
+            $data[] = $arr;
+            /*$id = array_key_last($data);
+            $data[$id]['id'] = $id;
+            $data[$id]['isPrivate'] = isset($arr['isPrivate']);
+            $data[$id]['image'] = $url;*/
+            File::put(storage_path() . '/news.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            return redirect()->route('news.one', $id)->with('success', 'Новость добавлена');
         }
 
         return view('admin.create',[

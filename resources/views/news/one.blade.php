@@ -13,14 +13,15 @@
                 <div class="card">
                     <div class="card-body">
                         @if ($news)
-                            <h2 class="text-center">{{ $news['title']}}</h2>
-                            @if (!$news['isPrivate'])
-                                <p class="text-center">{{ $news['text']}}</p>
+                            <h2 class="text-center">{{ $news->title }}</h2>
+                            <div class="card-img" style="background-image: url({{ $item->image ?? asset('storage/img/default.jpeg') }})"></div>
+                            @if (!$news->isPrivate)
+                                <p class="text-center">{{ $news->text }}</p>
                             @else
                                 <p class="text-center">Зарегистрируйтесь для просмотра</p>
                             @endif
                         @else
-                            <p class="text-center">Новость не найдена</p>
+                           <p class="text-center">Новость не найдена</p>
                         @endif
                     </div>
                 </div>

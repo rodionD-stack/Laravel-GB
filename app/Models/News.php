@@ -21,20 +21,6 @@ class News
             'text' => 'А тут плохие новости(((',
             'category_id' => 2,
             'isPrivate' => false
-        ],
-        '3' => [
-            'id' => 3,
-            'title' => 'Новость 1',
-            'text' => 'А у нас новость 1 и она очень хорошая!',
-            'category_id' => 1,
-            'isPrivate' => true
-        ],
-        '4' => [
-            'id' => 4,
-            'title' => 'Новость 2',
-            'text' => 'А тут плохие новости(((',
-            'category_id' => 2,
-            'isPrivate' => false
         ]
     ];
 
@@ -51,8 +37,7 @@ class News
 //    }
     public function getNews() //вывод новостей из файла
     {
-        $news = File::get(storage_path() . '/news.json');
-        return json_decode($news, true);
+        return json_decode(File::get(storage_path() . '/news.json'), true);
     }
 
     public function getNewsByCategorySlug($slug): array
@@ -76,12 +61,4 @@ class News
     {
         return $this->getNews()[$id] ?? [];
     }
-//    public function getNewsById($id): array
-//    {
-//        return $this->getNews()[$id] ?? [];
-//        foreach (static::getNews() as $news){
-//            if($news['id'] == $id) return $news;
-//        }
-//        return [];
-//    }
 }

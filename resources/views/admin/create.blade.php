@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">Форма добавления новости</h5>
-                        <form method="POST" action="{{ route('admin.create') }}">
+                        <form method="POST" action="{{ route('admin.create') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="newsTitle">Заголовок:</label>
@@ -37,6 +37,10 @@
                                         @if (old('isPrivate')) checked @endif name="isPrivate" value="1">
                                     <label for="newsPrivate">Приватная</label>
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="file" name="image">
                             </div>
 
                             <div class="form-group">

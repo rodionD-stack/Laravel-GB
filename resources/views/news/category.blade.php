@@ -17,9 +17,9 @@
                         <h2 class="text-center">Новости категории {{ $category }}</h2>
                         <ul class="list-group">
                         @forelse($news as $item)
-                            <li class="list-group-item"><a href="{{ route('news.one', $item['id']) }}"> {{ $item['title'] }}</a></li>
+                            <a href="{{ route('news.one', $item->id) }}"> {{ $item->title }}</a>
                         @empty
-                            <li><p class="text-center">Нет новостей</p></li>
+                            <p class="text-center">Нет новостей</p>
                         @endforelse
                         </ul>
                     </div>

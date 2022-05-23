@@ -12,12 +12,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="text-center">Новости</h2>
-                        <ul class="list-group">
-                        @forelse($news as $item)
-                                <li class="list-group-item"><a href="{{ route('news.one', $item['id']) }}"> {{ $item['title'] }}</a></li>
+                        <h3 class="text-center">Новости</h3>
+                        @forelse($news as $item)<a href="{{ route('news.one', $item->id) }}"> {{ $item->title }}</a>
+                        <div class="card-img" style="background-image: url({{ $item->image ?? asset('storage/img/default.jpeg') }})"></div>
                         @empty
-                                <li class="list-group-item">Нет новостей</li>
+                            <p class="text-center">Нет новостей</p>
                         @endforelse
                     </div>
                 </div>
